@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_recorder/theme/theme.dart';
 
 void main() {
   runApp(AppHome());
@@ -20,7 +21,9 @@ class _AppHomeState extends State<AppHome> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      ,
+      theme: selectedTheme,
+      initialRoute: ,
+      routes: ,
     );
   }
 }
