@@ -1,0 +1,17 @@
+{
+    "Title": "Dates' Health Recorder",
+    "Config": "Application Settings",
+    "LangConfig": "Language",
+    "Theme": "Theme",
+    "Account": "Account",
+    "AccountExp": "SignIn is Recommended. If you SignIn, your record will be saved on the web cloud, and you can restore it when you reinstall this App or you change your device; if you don't, your record will be saved only on your device.",
+    "EmailSignIn": "SignIn with E-mail",
+    "GoogleSignIn": "SignIn with Google Account.",
+    "Email": "Email Address",
+    "Password": "Password",
+    "SignUp": "Sign UP",
+    "SignIn": "Sign IN",
+    "NAVInput": "INPUT",
+    "NAVRecord": "RECORD",
+    "NAVAdviser": "ADVISER"
+}
