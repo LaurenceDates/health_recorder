@@ -137,22 +137,26 @@ class _EmailSignInState extends State<EmailSignIn> {
             );
           });
     } else {
-      AlertDialog(
-        title: Row(
-          children: [
-            Icon(Icons.sentiment_satisfied_alt),
-            Text(lang["SignInSuccessful"]),
-          ],
-        ),
-        content: Text(lang["SignInSuccessful"]),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, Config.id);
-              },
-              child: Text(lang["Return"])),
-        ],
-      );
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Row(
+                children: [
+                  Icon(Icons.sentiment_satisfied_alt),
+                  Text(lang["SignInSuccessful"]),
+                ],
+              ),
+              content: Text(lang["SignInSuccessful"]),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, Config.id);
+                    },
+                    child: Text(lang["Return"])),
+              ],
+            );
+          });
     }
   }
 }

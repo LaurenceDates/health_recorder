@@ -4,19 +4,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 bool signInState = false;
 
 int checkSignInState() {
-  FirebaseAuth.instance.authStateChanges().listen(
-    (User user) {
-      if (user == null) {
-        signInState = false;
-        print("User is NOT signed in!");
-        return 0;
-      } else {
-        signInState = true;
-        print("User is signed in.");
-        return 0;
-      }
-    },
-  );
+  FirebaseAuth.instance.currentUser != null
+      ? signInState = true
+      : signInState = false;
+  return 0;
 }
 
 Future<int> register(String _email, String _password) async {
