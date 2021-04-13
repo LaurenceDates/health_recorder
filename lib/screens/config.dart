@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health_recorder/components/lang.dart';
 import 'package:health_recorder/screens/email.dart';
@@ -10,6 +11,26 @@ class Config extends StatefulWidget {
 }
 
 class _ConfigState extends State<Config> {
+  bool signInState;
+
+  @override
+  void initState() {
+    super.initState();
+    // .listenを使うなら、このように画面作成時に呼び出さないと間に合わない可能性が出てくる
+    signInState = FirebaseAuth.instance.currentUser.uid != null;
+    FirebaseAuth.instance.authStateChanges().listen(
+          (User user) {
+        if (user == null) {
+          signInState = false;
+
+          print("User is NOT signed in!");
+        } else {
+          signInState = true;
+          print("User is signed in.");
+        }
+      },);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,9 +177,6 @@ class _ConfigState extends State<Config> {
         ElevatedButton(
           onPressed: () async {
             await signInWithGoogle();
-            setState(() {
-              checkSignInState();
-            });
           },
           child: Row(
             children: [
