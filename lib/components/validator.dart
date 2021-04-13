@@ -1,5 +1,5 @@
 bool emailValidator(String _email) {
-  if (RegExp(r"^([!-~]+@[a-zA-Z0-9-_.]+.([a-zA-Z0-9-]+))*$").hasMatch(_email)) {
+  if (RegExp(r"^([!-~]+@[a-zA-Z0-9-_.]+.[a-zA-Z0-9-]+)*$").hasMatch(_email)) {
     return true;
   } else {
     return false;
