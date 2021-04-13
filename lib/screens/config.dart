@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:health_recorder/components/lang.dart';
 import 'package:health_recorder/screens/email.dart';
+import 'package:health_recorder/components/auth.dart';
 
 class Config extends StatefulWidget {
   static final id = "Config";
@@ -24,7 +25,7 @@ class _ConfigState extends State<Config> {
         children: [
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, Email.id);
+              Navigator.pushNamed(context, EmailSignIn.id);
             },
             child: Text(
               lang["NAVInput"],
@@ -75,10 +76,10 @@ class _ConfigState extends State<Config> {
                     DropdownMenuItem(
                       child: Text("Flutter Default Light Theme"),
                     ),
+                    DropdownMenuItem(
+                      child: Text("Flutter Default Dark Theme"),
+                    ),
                   ],
-                ),
-                DropdownMenuItem(
-                  child: Text("Flutter Default Dark Theme"),
                 ),
                 Text(
                     "Custom Theme is still under construction. It's coming soon.")
@@ -94,33 +95,9 @@ class _ConfigState extends State<Config> {
                     Text(lang["Account"]),
                   ],
                 ),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, Email.id);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(Icons.mail),
-                          Text(lang["EmailSignIn"]),
-                        ],
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            "img/google.png",
-                            width: 20,
-                            height: 20,
-                          ),
-                          Text(lang["GoogleSignIn"])
-                        ],
-                      ),
-                    ),
-                  ],
+                _signInState(),
+                Column(
+                  children: _signInBlock(),
                 ),
                 Text(lang["AccountExp"])
               ],
@@ -129,5 +106,72 @@ class _ConfigState extends State<Config> {
         ],
       ),
     );
+  }
+
+  Widget _signInState() {
+    if (signInState) {
+      return Text(lang["SignedIn"]);
+    } else
+      return Text(lang["NotSignedIn"]);
+  }
+
+  List<Widget> _signInBlock() {
+    if (signInState == true) {
+      return [
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              signOut();
+            });
+          },
+          child: Row(
+            children: [Icon(Icons.outbond), Text(lang["SignOut"])],
+          ),
+        ),
+      ];
+    } else {
+      return [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, EmailSignUp.id);
+          },
+          child: Row(
+            children: [
+              Icon(Icons.mail_outline),
+              Text(lang["EmailSignUp"]),
+            ],
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, EmailSignIn.id);
+          },
+          child: Row(
+            children: [
+              Icon(Icons.mail),
+              Text(lang["EmailSignIn"]),
+            ],
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            await signInWithGoogle();
+            setState(() {
+              checkSignInState();
+            });
+          },
+          child: Row(
+            children: [
+              Image.asset(
+                "assets/img/google.png",
+                width: 20,
+                height: 20,
+              ),
+              Text(lang["GoogleSignIn"])
+            ],
+          ),
+        ),
+      ];
+    }
   }
 }
