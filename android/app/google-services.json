@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "454204454618",
+    "project_id": "dates-studio-health-recorder",
+    "storage_bucket": "dates-studio-health-recorder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454204454618:android:f71a95aa482f50ac4897e3",
+        "android_client_info": {
+          "package_name": "studio.dates.health_recorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "454204454618-ueoo2n963qlsf5tvkahostr06mlubrhn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "studio.dates.health_recorder",
+            "certificate_hash": "c366eafde81a5d381f6e67bd8c778250ed7c047d"
+          }
+        },
+        {
+          "client_id": "454204454618-8c5t8daifa7n5h4653s91ag0o7ei3hk2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmkN3YGBFEwTehl16_F4PnJiMb6Sxnmlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "454204454618-8c5t8daifa7n5h4653s91ag0o7ei3hk2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
