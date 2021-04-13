@@ -12,7 +12,6 @@ import 'package:health_recorder/components/auth.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  checkSignInState();
   runApp(AppHome());
 }
 

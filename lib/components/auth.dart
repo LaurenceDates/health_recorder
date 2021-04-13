@@ -3,13 +3,16 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 bool signInState = false;
 
+// .listenの部分が非同期なので、ここのReturnは機能していない。
+// また、.listenは「通知を受け取る」処理になるので、ボタンを押下したときに用意するのではタイミングが遅い
+/*
 int checkSignInState() {
   FirebaseAuth.instance.currentUser != null
       ? signInState = true
       : signInState = false;
   return 0;
 }
-
+*/
 Future<int> register(String _email, String _password) async {
   try {
     UserCredential userCredential =

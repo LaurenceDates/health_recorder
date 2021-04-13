@@ -151,7 +151,8 @@ class _EmailSignInState extends State<EmailSignIn> {
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, Config.id);
+                      Navigator.pushNamedAndRemoveUntil(context, Config.id, ModalRoute.withName("/"));
+                      //Navigator.pushReplacementNamed(context, Config.id);
                     },
                     child: Text(lang["Return"])),
               ],
@@ -337,7 +338,8 @@ class _EmailSignUpState extends State<EmailSignUp> {
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, Config.id);
+                      Navigator.pushNamedAndRemoveUntil(context, Config.id, ModalRoute.withName("/"));
+                      //Navigator.pushReplacementNamed(context, Config.id);
                     },
                     child: Text(lang["Return"])),
               ],
