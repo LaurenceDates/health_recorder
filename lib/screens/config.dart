@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_recorder/components/lang.dart';
+import 'package:health_recorder/components/navigationbar.dart';
 import 'package:health_recorder/screens/email.dart';
 import 'package:health_recorder/components/auth.dart';
 
@@ -21,24 +22,7 @@ class _ConfigState extends State<Config> {
           ],
         ),
       ),
-      bottomNavigationBar: Row(
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, EmailSignIn.id);
-            },
-            child: Text(
-              lang["NAVInput"],
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: Text(
-              lang["NAVRecord"],
-            ),
-          ),
-        ],
-      ),
+      bottomNavigationBar: NavigationBar(),
       body: Column(
         children: [
           Container(
