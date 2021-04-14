@@ -11,12 +11,27 @@ int checkSignInState() {
 }
 
 Future<int> register(String _email, String _password) async {
+  UserCredential userCredential;
+  FirebaseAuth.instance
+      .createUserWithEmailAndPassword(
+    email: _email,
+    password: _password,
+  ).then((value) {
+    userCredential = value;
+  }).onError((error, stackTrace) {
+    if (error is FirebaseAuthException) {
+      if (error.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (error.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+      return;
+    }
+    print('想定外エラーです');
+  });
   try {
-    UserCredential userCredential =
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: _email,
-      password: _password,
-    );
+    signInState = true;
+    return 0;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
       print('The password provided is too weak.');
@@ -26,9 +41,8 @@ Future<int> register(String _email, String _password) async {
       return 2;
     }
   } catch (e) {
-    print(e);
-    signInState = true;
-    return 0;
+    print('想定外エラーです');
+    return 2;
   }
 }
 
