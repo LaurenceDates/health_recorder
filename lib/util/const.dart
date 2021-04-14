@@ -1,0 +1,1 @@
+enum TYPE {dark, light}
