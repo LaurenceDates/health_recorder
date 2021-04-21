@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:health_recorder/components/lang.dart';
+import 'package:provider/provider.dart';
+import 'package:health_recorder/providers/provider_preferences.dart';
 import 'package:health_recorder/components/auth.dart';
 import 'package:health_recorder/components/validator.dart';
-import 'package:health_recorder/screens/config.dart';
+import 'package:health_recorder/screens/screen_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // EmailSignIn
 class EmailSignIn extends StatefulWidget {
@@ -17,12 +19,20 @@ class _EmailSignInState extends State<EmailSignIn> {
   bool _emailValid = false;
   bool _passwordValid = false;
 
+  AsyncSnapshot<ThemeData> snapshotTheme;
+  AsyncSnapshot<Map<String, dynamic>> snapshotLanguage;
+  AsyncSnapshot<bool> snapshotConnectivity;
+  AsyncSnapshot<User> snapshotUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          children: [Icon(Icons.mail), Text(lang["EmailSignIn"])],
+          children: [
+            Icon(Icons.mail),
+            Text(Provider.of<ProviderPreferences>(context).languageMap["EmailSignIn"])
+          ],
         ),
       ),
       body: Column(
@@ -32,7 +42,7 @@ class _EmailSignInState extends State<EmailSignIn> {
               children: [
                 TextField(
                   decoration: InputDecoration(
-                    labelText: lang["Email"],
+                    labelText: Provider.of<ProviderPreferences>(context).languageMap["Email"],
                   ),
                   onChanged: (String _value) {
                     _email = _value;
@@ -44,7 +54,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                 Row(children: _emailValidText()),
                 TextField(
                   decoration: InputDecoration(
-                    labelText: lang["Password"],
+                    labelText: Provider.of<ProviderPreferences>(context).languageMap["Password"],
                   ),
                   onChanged: (String _value) {
                     _password = _value;
@@ -63,7 +73,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                     _signIn(context, _email, _password);
                   }
                 : null,
-            child: Text(lang["SignIn"]),
+            child: Text(Provider.of<ProviderPreferences>(context).languageMap["SignIn"]),
           ),
         ],
       ),
@@ -72,22 +82,29 @@ class _EmailSignInState extends State<EmailSignIn> {
 
   List<Widget> _emailValidText() {
     if (_emailValid) {
-      return [Icon(Icons.sentiment_satisfied_alt), Text(lang["EmailValid"])];
+      return [
+        Icon(Icons.sentiment_satisfied_alt),
+        Text(
+            Provider.of<ProviderPreferences>(context).languageMap["EmailValid"])
+      ];
     } else {
       return [
         Icon(Icons.sentiment_very_dissatisfied),
-        Text(lang["EmailInvalid"]),
+        Text(Provider.of<ProviderPreferences>(context).languageMap["EmailInvalid"]),
       ];
     }
   }
 
   List<Widget> _passwordValidText() {
     if (_passwordValid) {
-      return [Icon(Icons.sentiment_satisfied_alt), Text(lang["PasswordValid"])];
+      return [
+        Icon(Icons.sentiment_satisfied_alt),
+        Text(Provider.of<ProviderPreferences>(context).languageMap["PasswordValid"])
+      ];
     } else {
       return [
         Icon(Icons.sentiment_very_dissatisfied),
-        Text(lang["PasswordInvalid"]),
+        Text(Provider.of<ProviderPreferences>(context).languageMap["PasswordInvalid"]),
       ];
     }
   }
@@ -102,16 +119,16 @@ class _EmailSignInState extends State<EmailSignIn> {
               title: Row(
                 children: [
                   Icon(Icons.sentiment_very_dissatisfied),
-                  Text(lang["SignInFailed"]),
+                  Text(Provider.of<ProviderPreferences>(context).languageMap["SignInFailed"]),
                 ],
               ),
-              content: Text(lang["NoUser"]),
+              content: Text(Provider.of<ProviderPreferences>(context).languageMap["NoUser"]),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(lang["Return"])),
+                    child: Text(Provider.of<ProviderPreferences>(context).languageMap["Return"])),
               ],
             );
           });
@@ -123,16 +140,16 @@ class _EmailSignInState extends State<EmailSignIn> {
               title: Row(
                 children: [
                   Icon(Icons.sentiment_very_dissatisfied),
-                  Text(lang["SignInFailed"]),
+                  Text(Provider.of<ProviderPreferences>(context).languageMap["SignInFailed"]),
                 ],
               ),
-              content: Text(lang["WrongPassword"]),
+              content: Text(Provider.of<ProviderPreferences>(context).languageMap["WrongPassword"]),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(lang["Return"])),
+                    child: Text(Provider.of<ProviderPreferences>(context).languageMap["Return"])),
               ],
             );
           });
@@ -144,16 +161,16 @@ class _EmailSignInState extends State<EmailSignIn> {
               title: Row(
                 children: [
                   Icon(Icons.sentiment_satisfied_alt),
-                  Text(lang["SignInSuccessful"]),
+                  Text(Provider.of<ProviderPreferences>(context).languageMap["SignInSuccessful"]),
                 ],
               ),
-              content: Text(lang["SignInSuccessful"]),
+              content: Text(Provider.of<ProviderPreferences>(context).languageMap["SignInSuccessful"]),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pushReplacementNamed(context, Config.id);
                     },
-                    child: Text(lang["Return"])),
+                    child: Text(Provider.of<ProviderPreferences>(context).languageMap["Return"])),
               ],
             );
           });
@@ -175,12 +192,20 @@ class _EmailSignUpState extends State<EmailSignUp> {
   bool _passwordValid = false;
   bool _passwordMatch = false;
 
+  AsyncSnapshot<ThemeData> snapshotTheme;
+  AsyncSnapshot<Map<String, dynamic>> snapshotLanguage;
+  AsyncSnapshot<bool> snapshotConnectivity;
+  AsyncSnapshot<User> snapshotUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          children: [Icon(Icons.mail), Text(lang["EmailSignUp"])],
+          children: [
+            Icon(Icons.mail),
+            Text(Provider.of<ProviderPreferences>(context).languageMap["EmailSignUp"])
+          ],
         ),
       ),
       body: Column(
@@ -190,7 +215,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
               children: [
                 TextField(
                   decoration: InputDecoration(
-                    labelText: lang["Email"],
+                    labelText: Provider.of<ProviderPreferences>(context).languageMap["Email"],
                   ),
                   onChanged: (String _value) {
                     _email = _value;
@@ -202,7 +227,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 Row(children: _emailValidText()),
                 TextField(
                   decoration: InputDecoration(
-                    labelText: lang["Password"],
+                    labelText: Provider.of<ProviderPreferences>(context).languageMap["Password"],
                   ),
                   onChanged: (String _value) {
                     _password = _value;
@@ -214,7 +239,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 Row(children: _passwordValidText()),
                 TextField(
                     decoration: InputDecoration(
-                      labelText: lang["Password2"],
+                      labelText: Provider.of<ProviderPreferences>(context).languageMap["Password2"],
                     ),
                     onChanged: (_value) {
                       setState(() {
@@ -226,9 +251,9 @@ class _EmailSignUpState extends State<EmailSignUp> {
                       });
                     }),
                 Row(children: _passwordConfirmText()),
-                Text(lang["PasswordExp1"]),
-                Text(lang["PasswordExp2"]),
-                Text(lang["PasswordExp3"]),
+                Text(Provider.of<ProviderPreferences>(context).languageMap["PasswordExp1"]),
+                Text(Provider.of<ProviderPreferences>(context).languageMap["PasswordExp2"]),
+                Text(Provider.of<ProviderPreferences>(context).languageMap["PasswordExp3"]),
               ],
             ),
           ),
@@ -238,7 +263,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                     _signUp(context, _email, _password);
                   }
                 : null,
-            child: Text(lang["SignUp"]),
+            child: Text(Provider.of<ProviderPreferences>(context).languageMap["SignUp"]),
           ),
         ],
       ),
@@ -247,33 +272,43 @@ class _EmailSignUpState extends State<EmailSignUp> {
 
   List<Widget> _emailValidText() {
     if (_emailValid) {
-      return [Icon(Icons.sentiment_satisfied_alt), Text(lang["EmailValid"])];
+      return [
+        Icon(Icons.sentiment_satisfied_alt),
+        Text(
+            Provider.of<ProviderPreferences>(context).languageMap["EmailValid"])
+      ];
     } else {
       return [
         Icon(Icons.sentiment_very_dissatisfied),
-        Text(lang["EmailInvalid"]),
+        Text(Provider.of<ProviderPreferences>(context).languageMap["EmailInvalid"]),
       ];
     }
   }
 
   List<Widget> _passwordValidText() {
     if (_passwordValid) {
-      return [Icon(Icons.sentiment_satisfied_alt), Text(lang["PasswordValid"])];
+      return [
+        Icon(Icons.sentiment_satisfied_alt),
+        Text(Provider.of<ProviderPreferences>(context).languageMap["PasswordValid"])
+      ];
     } else {
       return [
         Icon(Icons.sentiment_very_dissatisfied),
-        Text(lang["PasswordInvalid"]),
+        Text(Provider.of<ProviderPreferences>(context).languageMap["PasswordInvalid"]),
       ];
     }
   }
 
   List<Widget> _passwordConfirmText() {
     if (_passwordMatch) {
-      return [Icon(Icons.sentiment_satisfied_alt), Text(lang["PasswordValid"])];
+      return [
+        Icon(Icons.sentiment_satisfied_alt),
+        Text(Provider.of<ProviderPreferences>(context).languageMap["PasswordValid"])
+      ];
     } else {
       return [
         Icon(Icons.sentiment_very_dissatisfied),
-        Text(lang["PasswordInvalid"]),
+        Text(Provider.of<ProviderPreferences>(context).languageMap["PasswordInvalid"]),
       ];
     }
   }
@@ -288,16 +323,17 @@ class _EmailSignUpState extends State<EmailSignUp> {
               title: Row(
                 children: [
                   Icon(Icons.sentiment_very_dissatisfied),
-                  Text(lang["SignUpFailed"]),
+                  Text(Provider.of<ProviderPreferences>(context).languageMap["SignUpFailed"]),
                 ],
               ),
-              content: Text(lang["PasswordWeak"]),
+              content: Text(Provider.of<ProviderPreferences>(context).languageMap["PasswordWeak"]),
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, Config.id, ModalRoute.withName("/"));
                     },
-                    child: Text(lang["Return"])),
+                    child: Text(Provider.of<ProviderPreferences>(context).languageMap["Return"])),
               ],
             );
           });
@@ -309,16 +345,16 @@ class _EmailSignUpState extends State<EmailSignUp> {
               title: Row(
                 children: [
                   Icon(Icons.sentiment_very_dissatisfied),
-                  Text(lang["SignUpFailed"]),
+                  Text(Provider.of<ProviderPreferences>(context).languageMap["SignUpFailed"]),
                 ],
               ),
-              content: Text(lang["AccountExists"]),
+              content: Text(Provider.of<ProviderPreferences>(context).languageMap["AccountExists"]),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(lang["Return"])),
+                    child: Text(Provider.of<ProviderPreferences>(context).languageMap["Return"])),
               ],
             );
           });
@@ -330,16 +366,18 @@ class _EmailSignUpState extends State<EmailSignUp> {
               title: Row(
                 children: [
                   Icon(Icons.sentiment_satisfied_alt),
-                  Text(lang["SignUpSuccessful"]),
+                  Text(Provider.of<ProviderPreferences>(context).languageMap["SignUpSuccessful"]),
                 ],
               ),
-              content: Text(lang["SignUpSuccessful"]),
+              content: Text(Provider.of<ProviderPreferences>(context).languageMap["SignUpSuccessful"]),
               actions: [
                 TextButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, Config.id);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, Config.id, ModalRoute.withName("/"));
+                      ;
                     },
-                    child: Text(lang["Return"])),
+                    child: Text(Provider.of<ProviderPreferences>(context).languageMap["Return"])),
               ],
             );
           });

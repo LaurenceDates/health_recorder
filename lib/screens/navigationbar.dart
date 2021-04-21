@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:health_recorder/components/lang.dart';
-import 'package:health_recorder/screens/input.dart';
+import 'package:provider/provider.dart';
+import 'package:health_recorder/providers/provider_preferences.dart';
+import 'package:health_recorder/screens/screen_input.dart';
 
 class NavigationBar extends StatelessWidget {
   @override
@@ -12,13 +13,13 @@ class NavigationBar extends StatelessWidget {
             Navigator.pushNamed(context, Input.id);
           },
           child: Text(
-            lang["NAVInput"],
+            Provider.of<ProviderPreferences>(context).languageMap["NAVInput"],
           ),
         ),
         ElevatedButton(
           onPressed: () {},
           child: Text(
-            lang["NAVRecord"],
+            Provider.of<ProviderPreferences>(context).languageMap["NAVRecord"],
           ),
         ),
       ],

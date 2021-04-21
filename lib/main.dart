@@ -3,66 +3,60 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:health_recorder/screens/config.dart';
-import 'package:health_recorder/theme/theme.dart';
-import 'package:health_recorder/components/lang.dart';
-import 'package:health_recorder/screens/email.dart';
-import 'package:health_recorder/components/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:health_recorder/screens/screen_splash.dart';
+import 'package:provider/provider.dart';
+import 'package:multiple_stream_builder/multiple_stream_builder.dart';
+//providers
+import 'package:health_recorder/providers/provider_connectivity.dart';
+import 'package:health_recorder/providers/provider_loading.dart';
+import 'package:health_recorder/providers/provider_signin.dart';
+import 'package:health_recorder/providers/provider_preferences.dart';
+// Routes
+import 'package:health_recorder/screens/screen_input.dart';
+import 'package:health_recorder/screens/screen_config.dart';
+import 'package:health_recorder/screens/screen_email.dart';
+//Others
+import 'package:health_recorder/general/instances.dart';
+import 'package:health_recorder/screens/screen_loading_overwrap.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  checkSignInState();
-  runApp(AppHome());
+  runApp(GeneralProviders());
 }
 
-class AppHome extends StatefulWidget {
-  @override
-  _AppHomeState createState() => _AppHomeState();
-}
-
-class _AppHomeState extends State<AppHome> {
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     startupLanguageSelector();
-//     super.initState();
-//   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //     theme: selectedTheme,
-  //     home: Config(),
-  //   );
-  // }
-
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAuth auth = FirebaseAuth.instance;
-
+class GeneralProviders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: startupLanguageSelector(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp(
-            navigatorObservers: [
-              FirebaseAnalyticsObserver(analytics: analytics),
-            ],
-            title: lang["Title"],
-            theme: selectedTheme,
-            initialRoute: Config.id,
-            routes: {
-              Config.id: (context) => Config(),
-              EmailSignIn.id: (context) => EmailSignIn(),
-              EmailSignUp.id: (context) => EmailSignUp(),
-            },
-          );
-        } else {
-          return Container();
-        }
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ProviderPreferences>(
+            create: (context) => ProviderPreferences()),
+        ChangeNotifierProvider<ProviderSignIn>(
+            create: (context) => ProviderSignIn()),
+      ],
+      child: AppHome(),
     );
+  }
+}
+
+class AppHome extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: "Title",
+        theme: Provider.of<ProviderPreferences>(context).selectedTheme,
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: analytics),
+        ],
+        initialRoute: Splash.id,
+        routes: {
+          Splash.id: (context) => Splash(),
+          Config.id: (context) => Config(),
+          EmailSignIn.id: (context) => EmailSignIn(),
+          EmailSignUp.id: (context) => EmailSignUp(),
+          Input.id: (context) => Input(),
+        });
   }
 }
