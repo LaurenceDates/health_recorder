@@ -9,8 +9,26 @@ import 'package:health_recorder/general/instances.dart';
 
 Record record = Record();
 
+class Data {
+  List<Record> listItem;
+
+  Data({this.listItem});
+
+  factory Data.fromJson(Map<String, dynamic> json) => json["record"]
+      .map((dynamic key, dynamic value) =>
+          Record.fromJson(value, DateTime.parse(key)))
+      .toList();
+
+  Map<String, dynamic> toJson() => <String, dynamic> {
+    "record": List<dynamic>.from(listItem.map<Map<String, dynamic>>((i) => i.toJson())),
+  };
+}
+
 class Record {
-  Map<DateTime, dynamic> record;
+  Record({this.date, this.detail});
+
+  DateTime date;
+  RecordDetail detail;
 
   // void loadRecordfromDevice() async {
   //   SharedPreferences pref = await SharedPreferences.getInstance();
@@ -53,4 +71,33 @@ class Record {
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
+
+  factory Record.fromJson(Map<String, dynamic> json, DateTime date) => Record(
+        date: date,
+        detail: RecordDetail.fromJson(json),
+      );
+
+  Map<String, dynamic> toJson() => {
+        this.date.toLocal().toIso8601String(): detail.toJson(),
+      };
+}
+
+class RecordDetail {
+  double height;
+  double weight;
+  double bmi;
+
+  RecordDetail({this.height, this.weight, this.bmi});
+
+  factory RecordDetail.fromJson(Map<String, dynamic> json) => RecordDetail(
+        height: json["height"],
+        weight: json["weight"],
+        bmi: json["bmi"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "height": height,
+        "Weight": weight,
+        "BMI": bmi,
+      };
 }

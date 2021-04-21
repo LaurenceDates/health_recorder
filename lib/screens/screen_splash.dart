@@ -6,16 +6,16 @@ import 'package:health_recorder/screens/screen_config.dart';
 
 class Splash extends StatelessWidget {
   static final String id = "Splash";
+  final Function callBack;
+
+  const Splash({Key key, this.callBack}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton(
           onPressed: () {
-            Provider.of<ProviderPreferences>(context, listen: false)
-                .loadPreferences();
-            Provider.of<ProviderSignIn>(context, listen: false)
-                .updateSignInState();
-            Navigator.pushNamed(context, Config.id);
+            callBack(true);
           },
           child: Text("Tap to Run App")),
     );
