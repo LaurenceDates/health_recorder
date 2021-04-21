@@ -20,6 +20,13 @@ class _InputState extends State<Input> {
   double inputHeight;
   double inputWeight;
   double calculatedBMI;
+  
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

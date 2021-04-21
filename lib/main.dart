@@ -42,6 +42,14 @@ class GeneralProviders extends StatelessWidget {
 }
 
 class AppHome extends StatelessWidget {
+  bool flag = false;
+
+  void changeFlag(bool value) {
+    setState(() {
+      flag = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,7 +60,7 @@ class AppHome extends StatelessWidget {
         ],
         initialRoute: Splash.id,
         routes: {
-          Splash.id: (context) => Splash(),
+          Splash.id: (context) => Splash(callBack: changeFlag,),
           Config.id: (context) => Config(),
           EmailSignIn.id: (context) => EmailSignIn(),
           EmailSignUp.id: (context) => EmailSignUp(),
